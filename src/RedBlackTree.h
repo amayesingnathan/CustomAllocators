@@ -34,10 +34,17 @@ public:
 private:
     using NodePtr = Node*;
 
+    NodePtr mNull = nullptr;
     NodePtr mRoot = nullptr;
 
 public:
-    RedBlackTree() = default;
+    RedBlackTree()
+    {
+        mNull = new Node;
+        mNull->colour = BLACK;
+        mRoot = mNull;
+    }
+    ~RedBlackTree() { delete mNull; }
 
     void insert(const T& key)
     {
@@ -47,10 +54,13 @@ public:
 
     void insert(NodePtr newNode)
     {
+        newNode->left = mNull;
+        newNode->right = mNull;
+
         NodePtr y = nullptr;
         NodePtr x = mRoot;
 
-        while (x)
+        while (x != mNull)
         {
             y = x;
             if (newNode->data < x->data)
@@ -86,7 +96,7 @@ public:
     NodePtr min(NodePtr node = mRoot) const
     {
         ASSERT(node);
-        while (node->left) {
+        while (node->left != mNull) {
             node = node->left;
         }
         return node;
@@ -94,7 +104,7 @@ public:
     NodePtr max(NodePtr node = mRoot) const
     {
         ASSERT(node);
-        while (node->right) {
+        while (node->right != mNull) {
             node = node->right;
         }
         return node;
@@ -104,11 +114,11 @@ public:
     {
         ASSERT(node);
 
-        if (node->right)
+        if (node->right != mNull)
             return min(node->right);
 
         NodePtr y = node->parent;
-        while (y && node == y->right)
+        while (y != mNull && node == y->right)
         {
             node = y;
             y = y->parent;
@@ -120,11 +130,11 @@ public:
     {
         ASSERT(node);
 
-        if (node->left)
+        if (node->left != mNull)
             return max(node->left);
 
         NodePtr y = node->parent;
-        while (y && node == y->left)
+        while (y != mNull && node == y->left)
         {
             node = y;
             y = y->parent;
@@ -273,7 +283,7 @@ private:
 
     void FindR(NodePtr node, const T& key) const
     {
-        if (!node || key == node->data)
+        if (node == mNull || key == node->data)
             return node;
 
         if (key < node->data)
@@ -300,10 +310,10 @@ private:
 
     void DeleteImpl(NodePtr start, NodePtr node)
     {
-        NodePtr z = nullptr;
+        NodePtr z = mNull;
         NodePtr x, y;
 
-        while (start)
+        while (start != mNull)
         {
             if (start->data == node->data)
                 z = start;
@@ -314,18 +324,18 @@ private:
                 start = start->left;
         }
 
-        if (!z)
+        if (z == mNull)
             return;
 
         y = z;
         Colour yOrigCol = y->colour;
 
-        if (!z->left)
+        if (z->left == mNull)
         {
             x = z->right;
             Transplant(z, z->right);
         }
-        else if (!z->right)
+        else if (z->right == mNull)
         {
             x = z->left;
             Transplant(z, z->left);
@@ -375,7 +385,7 @@ private:
     {
         NodePtr y = x->right;
         x->right = y->left;
-        if (y->left)
+        if (y->left != mNull)
             y->left->parent = x;
 
         y->parent = x->parent;
@@ -394,7 +404,7 @@ private:
     {
         NodePtr y = x->left;
         x->left = y->right;
-        if (y->left)
+        if (y->left != mNull)
             y->left->parent = x;
 
         y->parent = x->parent;
