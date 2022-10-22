@@ -27,18 +27,20 @@ public:
     void free(void* ptr) override
     {
         constexpr size_t HeaderSize = sizeof(AllocHeader);
-        size_t headerAddress = (size_t)ptr - HeaderSize;
+        size_t ptrAddress = (size_t)ptr;
+        size_t headerAddress = ptrAddress - HeaderSize;
+        void* headerPtr = (void*)headerAddress;
         AllocHeader* header = (AllocHeader*)headerAddress;
 
         size_t lastAddress = (size_t)mMemBlock + mUsed - header->blockSize;
-        ASSERT((size_t)ptr == lastAddress, "Can only free the last allocated block!");
+        ASSERT(ptrAddress == lastAddress, "Can only free the last allocated block!");
 
         mUsed -= header->blockSize + HeaderSize;
     }
 
     void reset() { Init(); }
 
-protected:
+protected:  
     void Init() override
     {
         if (mMemBlock)
@@ -57,8 +59,8 @@ protected:
         ASSERT(mUsed + size + HeaderSize < mMaxSize, "No free memory!");
 
         ((AllocHeader*)((size_t)mMemBlock + mUsed))->blockSize = size;
+        size_t newAddress = (size_t)mMemBlock + mUsed + HeaderSize;
         mUsed += size + HeaderSize;
-        size_t newAddress = (size_t)mMemBlock + mUsed;
         return (void*)newAddress;
     }
 
