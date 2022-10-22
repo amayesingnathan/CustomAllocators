@@ -15,42 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\RedBlackTree.h">
+    <ClInclude Include="src\Allocators\Allocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Common.h">
+    <ClInclude Include="src\Allocators\DefaultAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Allocator.h">
+    <ClInclude Include="src\Allocators\FreeListAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\FreeTreeAllocator.h">
+    <ClInclude Include="src\Allocators\FreeTreeAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\DefaultAllocator.h">
+    <ClInclude Include="src\Allocators\LinearAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\LinearAllocator.h">
+    <ClInclude Include="src\Allocators\PoolAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\StackAllocator.h">
+    <ClInclude Include="src\Allocators\StackAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\FreeListAllocator.h">
+    <ClInclude Include="src\Benchmark\Benchmark.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PoolAllocator.h">
+    <ClInclude Include="src\Containers\RedBlackTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Benchmark.h">
+    <ClInclude Include="src\Core\Common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform.h">
+    <ClInclude Include="src\Core\Platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Allocators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
+    <ClCompile Include="src\Allocators\FreeListAllocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Allocators\FreeTreeAllocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Allocators\LinearAllocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Allocators\PoolAllocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Allocators\StackAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

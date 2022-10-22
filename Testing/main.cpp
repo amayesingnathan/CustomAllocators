@@ -1,11 +1,4 @@
-#include "DefaultAllocator.h"
-#include "LinearAllocator.h"
-#include "StackAllocator.h"
-#include "PoolAllocator.h"
-#include "FreeListAllocator.h"
-#include "FreeTreeAllocator.h"
-
-#include "Benchmark.h"
+#include "Allocators.h"
 
 template<typename T>
 void RunBenchmark()
