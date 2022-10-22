@@ -28,6 +28,9 @@ public:
 
     void free(void* ptr) override
     {
+        if (!ptr)
+            return;
+
         Node* block = (Node*)ptr;
         block->next = mHead;
         mHead = block;

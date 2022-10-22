@@ -26,6 +26,9 @@ public:
 
     void free(void* ptr) override
     {
+        if (!ptr)
+            return;
+
         constexpr size_t HeaderSize = sizeof(AllocHeader);
         size_t ptrAddress = (size_t)ptr;
         size_t headerAddress = ptrAddress - HeaderSize;

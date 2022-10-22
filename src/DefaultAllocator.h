@@ -9,6 +9,9 @@ public:
 
     void free(void* ptr) override
     {
+        if (!ptr)
+            return;
+
         ::operator delete(ptr);
     }
 
