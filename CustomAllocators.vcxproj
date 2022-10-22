@@ -152,6 +152,7 @@
     <ClInclude Include="src\LinearAllocator.h" />
     <ClInclude Include="src\Platform.h" />
     <ClInclude Include="src\PoolAllocator.h" />
+    <ClInclude Include="src\Benchmark.h" />
     <ClInclude Include="src\StackAllocator.h" />
     <ClInclude Include="src\RedBlackTree.h" />
   </ItemGroup>

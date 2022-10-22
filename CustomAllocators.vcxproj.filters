@@ -42,6 +42,9 @@
     <ClInclude Include="src\PoolAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Benchmark.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
