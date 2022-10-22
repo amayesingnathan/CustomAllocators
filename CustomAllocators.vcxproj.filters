@@ -33,6 +33,9 @@
     <ClInclude Include="src\LinearAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\StackAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
