@@ -74,6 +74,8 @@ protected:
         constexpr size_t NodeSize = sizeof(Node);
         constexpr size_t HeaderSize = sizeof(AllocHeader);
 
+        ASSERT(size >= NodeSize, "Request size must be larger than a node!");
+
         Node* bestNode = Find(size);
         ASSERT(bestNode, "No free memory available!");
 
