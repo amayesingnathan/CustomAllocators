@@ -8,8 +8,11 @@
 
 #include "Allocator.h"
 
-#define TenMB 10485760
-#define TenKB 10240
+#define OneMB 1048576
+#define OneKB 1024
+
+#define BLOCK_AMOUNT 256 * OneMB
+#define ALLOC_AMOUNT 64
 
 template<size_t size>
 struct TestData
@@ -25,6 +28,10 @@ struct BenchmarkResults
 	float timePerOp, timePerAlloc, timePerFree;
 };
 
+class DefaultAllocator;
+class StackAllocator;
+class PoolAllocator;
+
 template<typename AllocT>
 class Benchmark
 {
@@ -38,21 +45,26 @@ public:
 	Benchmark(LogPolicy policy = CONSOLE)
 		: mPolicy(policy)
 	{
-		if constexpr (std::is_same<AllocT, class DefaultAllocator>::value)
+		if constexpr (std::is_same<AllocT, DefaultAllocator>::value)
 			mAllocator = Make<AllocT>();
-		else if constexpr (std::is_same<AllocT, class PoolAllocator>::value)
-			mAllocator = Make<AllocT>(TenMB, TenKB);
+		else if constexpr (std::is_same<AllocT, PoolAllocator>::value)
+			mAllocator = Make<AllocT>(BLOCK_AMOUNT, ALLOC_AMOUNT);
 		else
-			mAllocator = Make<AllocT>(TenMB);
+			mAllocator = Make<AllocT>(BLOCK_AMOUNT);
 	}
 
-	template<size_t AllocSize>
 	void run()
 	{
-		using TestObj = TestData<AllocSize>;
-		constexpr size_t AllocCount = TenMB / AllocSize;
+		using TestObj = TestData<ALLOC_AMOUNT>;
+		size_t AllocCount;
+		if constexpr (std::is_same<AllocT, StackAllocator>::value)
+			AllocCount = (BLOCK_AMOUNT) / (ALLOC_AMOUNT + sizeof(StackAllocator::AllocHeader));
+		else if constexpr (std::is_same<AllocT, FreeTreeAllocator>::value)
+			AllocCount = BLOCK_AMOUNT / (ALLOC_AMOUNT + sizeof(FreeTreeAllocator::AllocHeader));
+		else
+			AllocCount = BLOCK_AMOUNT / ALLOC_AMOUNT;
 
-		TestObj* allocData[AllocCount];
+		std::vector<TestObj*> allocData(AllocCount);
 		mResults = BenchmarkResults();
 
 		Begin();
@@ -62,7 +74,14 @@ public:
 		EndAlloc(AllocCount);
 
 		for (size_t i = 0; i < AllocCount; i++)
-			mAllocator->free(allocData[i]);
+		{
+			if constexpr (std::is_same<AllocT, LinearAllocator>::value)
+				continue;
+			else if constexpr (std::is_same<AllocT, StackAllocator>::value)
+				mAllocator->free(allocData[AllocCount - i - 1]);
+			else
+				mAllocator->free(allocData[i]);
+		}
 		EndFree(AllocCount);
 
 		End(AllocCount);
@@ -109,12 +128,12 @@ private:
 		mTrace << "\n";
 		mTrace << "\tFrees:\n";
 		mTrace << "\t\tDuration: " << mResults.freeDuration.count() << "ms\n";
-		mTrace << "\t\tPer Second: " << mResults.freePerSec << " allocations\n";
+		mTrace << "\t\tPer Second: " << mResults.freePerSec << " frees\n";
 		mTrace << "\t\tPer Free: " << mResults.timePerFree << "ms\n";
 		mTrace << "\n";
 		mTrace << "\tCombined:\n";
 		mTrace << "\t\tDuration: " << mResults.duration.count() << "ms\n";
-		mTrace << "\t\tPer Second: " << mResults.opsPerSec << " allocations\n";
+		mTrace << "\t\tPer Second: " << mResults.opsPerSec << " operations\n";
 		mTrace << "\t\tPer Op: " << mResults.timePerOp << "ms\n";
 		mTrace << "\n";
 

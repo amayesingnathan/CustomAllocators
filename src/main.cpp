@@ -12,17 +12,17 @@
 #include "Benchmark.h"
 
 template<typename T>
-void RunAllocTest()
+void RunBenchmark()
 {
 	Benchmark<T> benchmarker;
-	benchmarker.run<TenKB>();
+	benchmarker.run();
 }
 
 int main()
 {
-	//RunAllocTest<DefaultAllocator>();
-	RunAllocTest<LinearAllocator>();
-	//RunAllocTest<StackAllocator>();
-	//RunAllocTest<PoolAllocator>();
-	//RunAllocTest<FreeTreeAllocator>();
+	RunBenchmark<DefaultAllocator>();
+	RunBenchmark<LinearAllocator>();
+	RunBenchmark<StackAllocator>();
+	RunBenchmark<PoolAllocator>();
+	RunBenchmark<FreeTreeAllocator>();
 }
