@@ -1,8 +1,11 @@
 #pragma once
 
+#include "Common.h"
+
 class Allocator
 {
 public:
+    Allocator() = default;
     Allocator(size_t maxSize)
         : mMaxSize(maxSize) {
     }
@@ -12,10 +15,10 @@ public:
     template<typename T>
     T* alloc() { return (T*)AllocImpl(sizeof(T)); }
 
-    virtual void init() = 0;
     virtual void free(void* ptr) = 0;
 
 protected:
+    virtual void Init() = 0;
     virtual void* AllocImpl(size_t size) = 0;
 
 protected:

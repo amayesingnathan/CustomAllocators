@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="src\Allocator.h" />
     <ClInclude Include="src\Common.h" />
+    <ClInclude Include="src\DefaultAllocator.h" />
     <ClInclude Include="src\FreeTreeAllocator.h" />
     <ClInclude Include="src\Platform.h" />
     <ClInclude Include="src\RedBlackTree.h" />

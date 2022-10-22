@@ -28,24 +28,7 @@ public:
     FreeTreeAllocator(size_t maxSize)
         : Allocator(maxSize) 
     {
-        init();
-    }
-
-    void init() override
-    {
-        if (mMemBlock)
-        {
-            ::operator delete(mMemBlock);
-             mMemBlock = nullptr;
-        }
-
-        mFreeTree.clear();
-        mMemBlock = ::operator new(mMaxSize);
-
-        Node* firstNode = new(mMemBlock) Node();
-        firstNode->data.prevBlockSize = 0;
-        firstNode->data.blockSize = mMaxSize;
-        mFreeTree.insert(firstNode);
+        Init();
     }
 
     void free(void* ptr) override
@@ -66,6 +49,23 @@ public:
     }
 
 protected:
+    void Init() override
+    {
+        if (mMemBlock)
+        {
+            ::operator delete(mMemBlock);
+            mMemBlock = nullptr;
+        }
+
+        mFreeTree.clear();
+        mMemBlock = ::operator new(mMaxSize);
+
+        Node* firstNode = new(mMemBlock) Node();
+        firstNode->data.prevBlockSize = 0;
+        firstNode->data.blockSize = mMaxSize;
+        mFreeTree.insert(firstNode);
+    }
+
     void* AllocImpl(size_t size) override
     {
         constexpr size_t NodeSize = sizeof(Node);
