@@ -36,6 +36,9 @@
     <ClInclude Include="src\StackAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\FreeListAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\PoolAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
