@@ -2,6 +2,9 @@
 
 #include <new>
 #include <string_view>
+#include <iostream>
+#include <memory>
+#include <utility>
 
 #include <cassert>
 #include <cstdint>

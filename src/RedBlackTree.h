@@ -6,7 +6,7 @@ template<typename T>
 class RedBlackTree
 {
 public:
-    enum Colour : uint64_t
+    enum Colour
     {
         RED, BLACK
     };
@@ -15,10 +15,10 @@ public:
     {
         T data;
 
+        Colour colour = RED;
         Node* parent = nullptr;
         Node* left = nullptr;
         Node* right = nullptr;
-        Colour colour = RED;
 
         Node() : data() {}
         Node(const T& _data) : data(_data) {}

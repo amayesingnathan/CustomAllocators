@@ -1,7 +1,3 @@
-#include <iostream>
-#include <memory>
-#include <utility>
-
 #include "DefaultAllocator.h"
 #include "LinearAllocator.h"
 #include "StackAllocator.h"
