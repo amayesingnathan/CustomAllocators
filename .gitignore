@@ -1,3 +1,16 @@
+#Binaries
 bin/
 obj/
+
+
+#VS files
 .vs/
+.vscode/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj
+**.csproj.user
+
+Testbed/
