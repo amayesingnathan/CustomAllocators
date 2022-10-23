@@ -42,7 +42,8 @@ void* FreeTreeAllocator::AllocImpl(size_t size)
     constexpr size_t NodeSize = sizeof(Node);
     constexpr size_t HeaderSize = sizeof(AllocHeader);
 
-    ASSERT(size >= NodeSize, "Request size must be larger than a node!");
+    if (size < NodeSize)
+        return nullptr;
 
     Node* bestNode = Find(size);
     ASSERT(bestNode, "No free memory available!");

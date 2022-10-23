@@ -8,10 +8,11 @@
 
 #include "Allocators/Allocator.h"
 
+#define OneGB 1073741824
 #define OneMB 1048576
 #define OneKB 1024
 
-#define BLOCK_AMOUNT 256 * OneMB
+#define BLOCK_AMOUNT OneGB
 #define ALLOC_AMOUNT 64
 
 template<size_t size>
